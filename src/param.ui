@@ -1,0 +1,2264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ParamWin</class>
+ <widget class="QDialog" name="ParamWin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>629</width>
+    <height>561</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>Data Configuration and Processing Parameters</string>
+  </property>
+  <layout class="QVBoxLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>System</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinThreads">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>15</y>
+         <width>126</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> CPU threads</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>256</number>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkRunMesh">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>105</y>
+         <width>198</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Run mesh construction.</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkRefine">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>135</y>
+         <width>191</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Run mesh refinement.</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkKeepEdgeOnly">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>165</y>
+         <width>205</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Keep edge channel only.</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkKeepProcessing">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>195</y>
+         <width>194</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Keep processing steps.</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkUseGLBuffers">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>225</y>
+         <width>194</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Use OpenGL buffer objects</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinHSThreads">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>50</y>
+         <width>126</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> CPU threads</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>256</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>TIFF</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinChannels">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>95</y>
+         <width>104</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> channels</string>
+       </property>
+       <property name="prefix">
+        <string/>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinFrames">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>35</y>
+         <width>164</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> frames</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinSlices">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>65</y>
+         <width>161</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> slices</string>
+       </property>
+       <property name="maximum">
+        <number>1000000000</number>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkOverrideTIFF">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>40</y>
+         <width>129</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Override TIFF</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>230</y>
+         <width>75</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>end frame</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_4">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>200</y>
+         <width>81</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>start frame</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_23">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>260</y>
+         <width>79</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>step frame</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinStartFrame">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>195</y>
+         <width>59</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinEndFrame">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>225</y>
+         <width>59</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinStepFrame">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>255</y>
+         <width>59</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>999999999</number>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkScaleToZ">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>305</y>
+         <width>218</width>
+         <height>24</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>scale x and y axes to z axis</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>200</y>
+         <width>51</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>voxel x</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinVoxelZ">
+       <property name="geometry">
+        <rect>
+         <x>255</x>
+         <y>255</y>
+         <width>146</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> microns</string>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinVoxelX">
+       <property name="geometry">
+        <rect>
+         <x>255</x>
+         <y>195</y>
+         <width>146</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> microns</string>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>260</y>
+         <width>50</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>voxel z</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinScale">
+       <property name="geometry">
+        <rect>
+         <x>255</x>
+         <y>290</y>
+         <width>83</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> x</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_19">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>295</y>
+         <width>82</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>scale factor</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinVoxelY">
+       <property name="geometry">
+        <rect>
+         <x>255</x>
+         <y>225</y>
+         <width>146</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> microns</string>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>410</x>
+         <y>230</y>
+         <width>51</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>voxel y</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_38">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>385</y>
+         <width>112</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Nucleus channel</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinNucChannel">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>380</y>
+         <width>98</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="prefix">
+        <string>channel </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+       <property name="value">
+        <number>2</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinEdgeChannel">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>350</y>
+         <width>98</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="prefix">
+        <string>channel </string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>100</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>355</y>
+         <width>120</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Membrane channel</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinTimeStep">
+       <property name="geometry">
+        <rect>
+         <x>145</x>
+         <y>145</y>
+         <width>181</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="prefix">
+        <string/>
+       </property>
+       <property name="suffix">
+        <string> seconds</string>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <double>999999999.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>10</y>
+         <width>150</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Hyperstack parameters:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_11">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>150</y>
+         <width>86</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Time step</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Enhance</string>
+      </attribute>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>30</y>
+         <width>48</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>hist nx</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_31">
+       <property name="geometry">
+        <rect>
+         <x>55</x>
+         <y>65</y>
+         <width>33</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fmin</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>30</y>
+         <width>48</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>hist ny</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_10">
+       <property name="geometry">
+        <rect>
+         <x>305</x>
+         <y>30</y>
+         <width>47</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>hist nz</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinHistNx">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>25</y>
+         <width>56</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>512</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinHistNy">
+       <property name="geometry">
+        <rect>
+         <x>225</x>
+         <y>25</y>
+         <width>56</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>512</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinHistNz">
+       <property name="geometry">
+        <rect>
+         <x>365</x>
+         <y>25</y>
+         <width>56</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>512</number>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinFmin">
+       <property name="geometry">
+        <rect>
+         <x>95</x>
+         <y>60</y>
+         <width>82</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_24">
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>65</y>
+         <width>115</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>non edge radius</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinRNonEdge">
+       <property name="geometry">
+        <rect>
+         <x>455</x>
+         <y>60</y>
+         <width>92</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>105</y>
+         <width>571</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Membrane Enhancement</string>
+       </property>
+       <widget class="QDoubleSpinBox" name="spinR1Microns">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>250</x>
+          <y>25</y>
+          <width>151</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="suffix">
+         <string> microns</string>
+        </property>
+        <property name="decimals">
+         <number>5</number>
+        </property>
+        <property name="maximum">
+         <double>200.000000000000000</double>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_20">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>60</y>
+          <width>126</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 1 alpha</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinAlpha2">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>115</y>
+          <width>66</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_15">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>30</y>
+          <width>131</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 1 radius</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinAlpha1">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>55</y>
+          <width>66</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinR2">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>85</y>
+          <width>92</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string> voxels</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinR1">
+        <property name="geometry">
+         <rect>
+          <x>160</x>
+          <y>25</y>
+          <width>92</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string> voxels</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_18">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>90</y>
+          <width>131</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 2 radius</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_22">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>120</y>
+          <width>126</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 2 alpha</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>265</y>
+         <width>571</width>
+         <height>151</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Nucleus Enhancement</string>
+       </property>
+       <widget class="QLabel" name="label_39">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>125</y>
+          <width>126</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 2 alpha</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_40">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>40</y>
+          <width>131</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 1 radius</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_41">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>100</y>
+          <width>131</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 2 radius</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_42">
+        <property name="geometry">
+         <rect>
+          <x>15</x>
+          <y>70</y>
+          <width>126</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>rank filter 1 alpha</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinAlpha2_Nuc">
+        <property name="geometry">
+         <rect>
+          <x>145</x>
+          <y>120</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinR1_Nuc">
+        <property name="geometry">
+         <rect>
+          <x>145</x>
+          <y>30</y>
+          <width>92</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string> voxels</string>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinR2_Nuc">
+        <property name="geometry">
+         <rect>
+          <x>145</x>
+          <y>90</y>
+          <width>92</width>
+          <height>27</height>
+         </rect>
+        </property>
+        <property name="suffix">
+         <string> voxels</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinAlpha1_Nuc">
+        <property name="geometry">
+         <rect>
+          <x>145</x>
+          <y>60</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="decimals">
+         <number>3</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QCheckBox" name="checkRepairNucs">
+        <property name="geometry">
+         <rect>
+          <x>270</x>
+          <y>35</y>
+          <width>228</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Repair nuclei using membranes.</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinFmax">
+       <property name="geometry">
+        <rect>
+         <x>225</x>
+         <y>60</y>
+         <width>82</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_47">
+       <property name="geometry">
+        <rect>
+         <x>185</x>
+         <y>65</y>
+         <width>33</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>fmax</string>
+       </property>
+      </widget>
+      <zorder>groupBox_3</zorder>
+      <zorder>groupBox_2</zorder>
+      <zorder>label_7</zorder>
+      <zorder>label_31</zorder>
+      <zorder>label_9</zorder>
+      <zorder>label_10</zorder>
+      <zorder>spinHistNx</zorder>
+      <zorder>spinHistNy</zorder>
+      <zorder>spinHistNz</zorder>
+      <zorder>spinFmin</zorder>
+      <zorder>label_24</zorder>
+      <zorder>spinRNonEdge</zorder>
+      <zorder>spinFmax</zorder>
+      <zorder>label_47</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_6">
+      <attribute name="title">
+       <string>Boundary</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinThreshHigh">
+       <property name="geometry">
+        <rect>
+         <x>185</x>
+         <y>140</y>
+         <width>70</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>145</y>
+         <width>77</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>sigma high</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_35">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>145</y>
+         <width>81</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>thresh high</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinSigmaHigh">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>140</y>
+         <width>62</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_16">
+       <property name="geometry">
+        <rect>
+         <x>275</x>
+         <y>195</y>
+         <width>214</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>expansion boundary repair radius</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinR2Repair">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>230</y>
+         <width>92</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>500</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinRRepair">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>190</y>
+         <width>92</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>500</number>
+       </property>
+       <property name="value">
+        <number>15</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_45">
+       <property name="geometry">
+        <rect>
+         <x>275</x>
+         <y>225</y>
+         <width>256</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>contraction boundary repair radius (should be larger than expansion)</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinBoundaryFmin">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>95</y>
+         <width>82</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_53">
+       <property name="geometry">
+        <rect>
+         <x>285</x>
+         <y>95</y>
+         <width>121</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>boundary fmin</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoundaryMinComp">
+       <property name="geometry">
+        <rect>
+         <x>380</x>
+         <y>50</y>
+         <width>141</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_54">
+       <property name="geometry">
+        <rect>
+         <x>195</x>
+         <y>55</y>
+         <width>177</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>boundary min comp volume</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoundaryStart">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>15</y>
+         <width>57</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBoundaryEnd">
+       <property name="geometry">
+        <rect>
+         <x>380</x>
+         <y>15</y>
+         <width>57</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QListWidget" name="listBoundaryRanges">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>20</y>
+         <width>141</width>
+         <height>206</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Default</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QPushButton" name="pushButton">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>225</y>
+         <width>26</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>+</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_2">
+       <property name="geometry">
+        <rect>
+         <x>130</x>
+         <y>225</y>
+         <width>26</width>
+         <height>26</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>-</string>
+       </property>
+      </widget>
+      <zorder>label_54</zorder>
+      <zorder>spinThreshHigh</zorder>
+      <zorder>label_3</zorder>
+      <zorder>label_35</zorder>
+      <zorder>spinSigmaHigh</zorder>
+      <zorder>label_16</zorder>
+      <zorder>spinR2Repair</zorder>
+      <zorder>spinRRepair</zorder>
+      <zorder>label_45</zorder>
+      <zorder>spinBoundaryFmin</zorder>
+      <zorder>label_53</zorder>
+      <zorder>spinBoundaryMinComp</zorder>
+      <zorder>spinBoundaryStart</zorder>
+      <zorder>spinBoundaryEnd</zorder>
+      <zorder>listBoundaryRanges</zorder>
+      <zorder>pushButton</zorder>
+      <zorder>pushButton_2</zorder>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <attribute name="title">
+       <string>EDGE4D</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinThreshLow">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>15</y>
+         <width>70</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_34">
+       <property name="geometry">
+        <rect>
+         <x>95</x>
+         <y>20</y>
+         <width>77</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>thresh low</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinSigmaLow">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>15</y>
+         <width>62</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_26">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>225</y>
+         <width>170</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>min component volume</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMaxCompVol">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>190</y>
+         <width>141</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_25">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>195</y>
+         <width>177</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>max component volume</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMinCompVol">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>220</y>
+         <width>141</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinMaxCompVolMicrons">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>355</x>
+         <y>190</y>
+         <width>175</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="suffix">
+        <string> microns3</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="maximum">
+        <double>1000000000.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinMaxHoleRadMicrons">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>340</x>
+         <y>160</y>
+         <width>165</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="suffix">
+        <string> microns</string>
+       </property>
+       <property name="decimals">
+        <number>5</number>
+       </property>
+       <property name="maximum">
+        <double>200.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinMinCompVolMicrons">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>355</x>
+         <y>220</y>
+         <width>175</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="suffix">
+        <string> microns3</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="maximum">
+        <double>1000000000.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMaxHoleRad">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>160</y>
+         <width>96</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_21">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>170</y>
+         <width>119</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>max hole radius</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_32">
+       <property name="geometry">
+        <rect>
+         <x>275</x>
+         <y>20</y>
+         <width>73</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>sigma low</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinInternalLimit">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>280</y>
+         <width>124</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_33">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>285</y>
+         <width>140</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>internal voxel limit</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_36">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>250</y>
+         <width>140</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinNoiseCompVol">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>250</y>
+         <width>141</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_37">
+       <property name="geometry">
+        <rect>
+         <x>15</x>
+         <y>255</y>
+         <width>181</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>noise component volume</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinThreshNuc">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>50</y>
+         <width>70</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinSigmaNuc">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>50</y>
+         <width>62</width>
+         <height>27</height>
+        </rect>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_43">
+       <property name="geometry">
+        <rect>
+         <x>275</x>
+         <y>55</y>
+         <width>91</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>sigma nucleus</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_44">
+       <property name="geometry">
+        <rect>
+         <x>95</x>
+         <y>55</y>
+         <width>93</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>thresh nucleus</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_14">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>125</y>
+         <width>135</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>min/max nuc volume</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMinNucVol">
+       <property name="geometry">
+        <rect>
+         <x>175</x>
+         <y>120</y>
+         <width>130</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMaxNucVol">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>120</y>
+         <width>130</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_55">
+       <property name="geometry">
+        <rect>
+         <x>25</x>
+         <y>325</y>
+         <width>177</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>neighbor contact area alpha</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinNeighborContactAlpha">
+       <property name="geometry">
+        <rect>
+         <x>225</x>
+         <y>320</y>
+         <width>62</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <double>1.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.010000000000000</double>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_8">
+      <attribute name="title">
+       <string>Refine</string>
+      </attribute>
+      <widget class="QSpinBox" name="spinMCdim">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>35</y>
+         <width>89</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="value">
+        <number>2</number>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox">
+       <property name="geometry">
+        <rect>
+         <x>35</x>
+         <y>65</y>
+         <width>216</width>
+         <height>236</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Mesh Refinement</string>
+       </property>
+       <widget class="QLabel" name="label_29">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>115</y>
+          <width>42</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Alpha</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_13">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>40</y>
+          <width>45</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Sigma</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinRefineSigma">
+        <property name="geometry">
+         <rect>
+          <x>95</x>
+          <y>40</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_27">
+        <property name="geometry">
+         <rect>
+          <x>25</x>
+          <y>80</y>
+          <width>62</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Distance</string>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinRefineDistance">
+        <property name="geometry">
+         <rect>
+          <x>95</x>
+          <y>75</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinRefineAlpha">
+        <property name="geometry">
+         <rect>
+          <x>95</x>
+          <y>110</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QDoubleSpinBox" name="spinRefineStep">
+        <property name="geometry">
+         <rect>
+          <x>95</x>
+          <y>175</y>
+          <width>65</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+       </widget>
+       <widget class="QSpinBox" name="spinRefineIter">
+        <property name="geometry">
+         <rect>
+          <x>100</x>
+          <y>145</y>
+          <width>61</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="maximum">
+         <number>1000</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_28">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>145</y>
+          <width>69</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Iterations</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_30">
+        <property name="geometry">
+         <rect>
+          <x>50</x>
+          <y>180</y>
+          <width>34</width>
+          <height>19</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Step</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="label_12">
+       <property name="geometry">
+        <rect>
+         <x>80</x>
+         <y>35</y>
+         <width>119</width>
+         <height>19</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Mesh Resolution</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>NM2010</string>
+      </attribute>
+      <widget class="QLabel" name="label_46">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>25</y>
+         <width>561</width>
+         <height>66</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Segmentation algorithm published in Fernandez et al. Imaging plant growth in 4D: robust tissue reconstruction and lineaging at cell resolution. Nature Methods 7, 547–553 (1 July 2010) Supplementary Note 2.</string>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkRunNM2010">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>105</y>
+         <width>394</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Run Fernendez et al NM 2010 algorithm instead of EDGE4D.</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="checkUseASF">
+       <property name="geometry">
+        <rect>
+         <x>55</x>
+         <y>140</y>
+         <width>326</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Use optional alternate sequential filtering (ASF).</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinMaxASFRad">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>170</y>
+         <width>57</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_48">
+       <property name="geometry">
+        <rect>
+         <x>75</x>
+         <y>175</y>
+         <width>101</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Max. ASF radius</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_49">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>215</y>
+         <width>133</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Gaussian filter sigma</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinFilterSigma">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>210</y>
+         <width>73</width>
+         <height>25</height>
+        </rect>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinBgSeedThresh">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>245</y>
+         <width>57</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinHseed">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>275</y>
+         <width>57</width>
+         <height>25</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="spinErrorVoxThresh">
+       <property name="geometry">
+        <rect>
+         <x>205</x>
+         <y>305</y>
+         <width>141</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="suffix">
+        <string> voxels</string>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>9000000</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_50">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>250</y>
+         <width>146</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Background threshold</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_51">
+       <property name="geometry">
+        <rect>
+         <x>85</x>
+         <y>280</y>
+         <width>76</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>h-minimum</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_52">
+       <property name="geometry">
+        <rect>
+         <x>45</x>
+         <y>315</y>
+         <width>138</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Error cell max volume</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="spinErrorVoxThreshMicrons">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="geometry">
+        <rect>
+         <x>355</x>
+         <y>305</y>
+         <width>175</width>
+         <height>29</height>
+        </rect>
+       </property>
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="suffix">
+        <string> microns3</string>
+       </property>
+       <property name="decimals">
+        <number>3</number>
+       </property>
+       <property name="maximum">
+        <double>1000000000.000000000000000</double>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="comboAnalysis">
+     <item>
+      <property name="text">
+       <string>Volume Viewer</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Cell Shapes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Dorsal Folds</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Nuclei Only</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Nuclei and Membranes</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Static Analysis</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Manual Ground Truth</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ACME Comparison</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item>
+      <widget class="QPushButton" name="loadButton">
+       <property name="text">
+        <string>Load...</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="cancelButton">
+       <property name="text">
+        <string>Canel</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>loadButton</tabstop>
+  <tabstop>checkRunMesh</tabstop>
+  <tabstop>checkRefine</tabstop>
+  <tabstop>checkKeepEdgeOnly</tabstop>
+  <tabstop>checkKeepProcessing</tabstop>
+  <tabstop>spinFrames</tabstop>
+  <tabstop>checkOverrideTIFF</tabstop>
+  <tabstop>spinSlices</tabstop>
+  <tabstop>spinChannels</tabstop>
+  <tabstop>spinStartFrame</tabstop>
+  <tabstop>spinEndFrame</tabstop>
+  <tabstop>spinStepFrame</tabstop>
+  <tabstop>checkScaleToZ</tabstop>
+  <tabstop>spinVoxelX</tabstop>
+  <tabstop>spinVoxelY</tabstop>
+  <tabstop>spinVoxelZ</tabstop>
+  <tabstop>spinScale</tabstop>
+  <tabstop>spinHistNx</tabstop>
+  <tabstop>spinHistNy</tabstop>
+  <tabstop>spinHistNz</tabstop>
+  <tabstop>spinFmin</tabstop>
+  <tabstop>spinRNonEdge</tabstop>
+  <tabstop>spinThreshLow</tabstop>
+  <tabstop>spinSigmaLow</tabstop>
+  <tabstop>spinMaxHoleRad</tabstop>
+  <tabstop>spinMaxHoleRadMicrons</tabstop>
+  <tabstop>spinMaxCompVol</tabstop>
+  <tabstop>spinMaxCompVolMicrons</tabstop>
+  <tabstop>spinMinCompVol</tabstop>
+  <tabstop>spinMinCompVolMicrons</tabstop>
+  <tabstop>cancelButton</tabstop>
+  <tabstop>comboAnalysis</tabstop>
+  <tabstop>spinThreads</tabstop>
+  <tabstop>tabWidget</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+ <designerdata>
+  <property name="gridDeltaX">
+   <number>5</number>
+  </property>
+  <property name="gridDeltaY">
+   <number>5</number>
+  </property>
+  <property name="gridSnapX">
+   <bool>true</bool>
+  </property>
+  <property name="gridSnapY">
+   <bool>true</bool>
+  </property>
+  <property name="gridVisible">
+   <bool>true</bool>
+  </property>
+ </designerdata>
+</ui>

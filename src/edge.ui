@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EdgeWin</class>
+ <widget class="QMainWindow" name="EdgeWin">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1362</width>
+    <height>681</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::ClickFocus</enum>
+  </property>
+  <property name="windowTitle">
+   <string>EDGE4D</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_8">
+    <item row="1" column="0">
+     <layout class="QGridLayout" name="gridLayout_2">
+      <item row="0" column="0">
+       <widget class="_3dView" name="view" native="true">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>900</width>
+          <height>500</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_2">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>yz</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>t</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QScrollBar" name="scrollYplane">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label">
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>xz</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="1">
+         <widget class="QScrollBar" name="scrollTime">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximum">
+           <number>0</number>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QScrollBar" name="scrollXplane">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="0" column="1">
+       <widget class="QScrollBar" name="scrollZplane">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <layout class="QGridLayout" name="gridLayout_7"/>
+    </item>
+    <item row="2" column="0">
+     <widget class="QLabel" name="infoLabel">
+      <property name="font">
+       <font>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1362</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_View">
+    <property name="title">
+     <string>&amp;View</string>
+    </property>
+    <addaction name="actionLoad_Stack"/>
+    <addaction name="separator"/>
+    <addaction name="action_Quit"/>
+   </widget>
+   <widget class="QMenu" name="menu_Analysis">
+    <property name="title">
+     <string>&amp;Analysis</string>
+    </property>
+    <addaction name="actionSave_Labels"/>
+    <addaction name="actionSave_Analysis"/>
+    <addaction name="actionSave_Trajectory_Lengths"/>
+    <addaction name="actionSave_Stable_Neighbors"/>
+    <addaction name="actionSave_Neighbor_Swaps"/>
+    <addaction name="actionSave_Neighbor_Analysis"/>
+    <addaction name="actionSave_Neighbor_Counts"/>
+    <addaction name="actionSave_All_Trajectories"/>
+    <addaction name="actionSave_Contact_Analysis"/>
+   </widget>
+   <widget class="QMenu" name="menu_Window">
+    <property name="title">
+     <string>&amp;Window</string>
+    </property>
+    <addaction name="actionModels"/>
+    <addaction name="actionMeasurements"/>
+   </widget>
+   <widget class="QMenu" name="menu_Process">
+    <property name="title">
+     <string>&amp;Process</string>
+    </property>
+    <addaction name="action_Segment"/>
+    <addaction name="action_Measure"/>
+    <addaction name="actionUpdate_Measurement_Parameters"/>
+    <addaction name="actionSave_Ortho_Slices"/>
+    <addaction name="actionSave_Processing"/>
+   </widget>
+   <widget class="QMenu" name="menu_Display">
+    <property name="title">
+     <string>&amp;Display</string>
+    </property>
+    <addaction name="actionToggle_Colors"/>
+    <addaction name="actionToggle_Nuclei"/>
+   </widget>
+   <widget class="QMenu" name="menuQuick">
+    <property name="title">
+     <string>Quick</string>
+    </property>
+    <addaction name="actionSelect_Cell_Shapes"/>
+    <addaction name="actionSelect_Trajectories"/>
+    <addaction name="actionSelect_1_Neighbors"/>
+    <addaction name="actionSelect_2_Neighbors"/>
+    <addaction name="actionSelect_1_2_Neighbors_Right"/>
+    <addaction name="actionSelect_1_2_Neighbors_Left"/>
+    <addaction name="actionSelect_Custom_Neighbors_All"/>
+   </widget>
+   <addaction name="menu_View"/>
+   <addaction name="menu_Analysis"/>
+   <addaction name="menu_Window"/>
+   <addaction name="menu_Process"/>
+   <addaction name="menu_Display"/>
+   <addaction name="menuQuick"/>
+  </widget>
+  <widget class="QDockWidget" name="mDock">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>382</width>
+     <height>320</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetVerticalTitleBar</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Shape Models</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents">
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="0">
+      <widget class="QTreeWidget" name="mTree">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
+       </property>
+       <attribute name="headerVisible">
+        <bool>false</bool>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">1</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="refreshButton">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Match 3d</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="updateButton">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="text">
+          <string>Update 3d</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <widget class="QDockWidget" name="zDock">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>350</width>
+     <height>330</height>
+    </size>
+   </property>
+   <property name="features">
+    <set>QDockWidget::DockWidgetClosable|QDockWidget::DockWidgetFloatable|QDockWidget::DockWidgetVerticalTitleBar</set>
+   </property>
+   <property name="allowedAreas">
+    <set>Qt::LeftDockWidgetArea</set>
+   </property>
+   <property name="windowTitle">
+    <string>Measurements</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_2">
+    <layout class="QGridLayout" name="gridLayout_4">
+     <item row="0" column="0">
+      <widget class="QTreeWidget" name="zTree">
+       <property name="focusPolicy">
+        <enum>Qt::ClickFocus</enum>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="columnCount">
+        <number>3</number>
+       </property>
+       <attribute name="headerMinimumSectionSize">
+        <number>80</number>
+       </attribute>
+       <column>
+        <property name="text">
+         <string notr="true">Property</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Value</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Units</string>
+        </property>
+       </column>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="actionLoad_Stack">
+   <property name="text">
+    <string>Load Stack...</string>
+   </property>
+  </action>
+  <action name="action_Quit">
+   <property name="text">
+    <string>&amp;Quit</string>
+   </property>
+  </action>
+  <action name="actionModels">
+   <property name="text">
+    <string>Models</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+M</string>
+   </property>
+  </action>
+  <action name="actionMeasurements">
+   <property name="text">
+    <string>Measurements</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="action_Segment">
+   <property name="text">
+    <string>&amp;Segment</string>
+   </property>
+  </action>
+  <action name="action_Measure">
+   <property name="text">
+    <string>&amp;Measure</string>
+   </property>
+  </action>
+  <action name="actionSave_Labels">
+   <property name="text">
+    <string>Save Labels...</string>
+   </property>
+  </action>
+  <action name="actionUpdate_Measurement_Parameters">
+   <property name="text">
+    <string>Update Measurement Parameters</string>
+   </property>
+  </action>
+  <action name="actionSave_Analysis">
+   <property name="text">
+    <string>Save Analysis...</string>
+   </property>
+  </action>
+  <action name="actionSave_Ortho_Slices">
+   <property name="text">
+    <string>Save Ortho Slices</string>
+   </property>
+  </action>
+  <action name="actionToggle_Colors">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Toggle Colors</string>
+   </property>
+  </action>
+  <action name="actionToggle_Nuclei">
+   <property name="text">
+    <string>Toggle Nuclei</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionSave_Trajectory_Lengths">
+   <property name="text">
+    <string>Save Trajectory Lengths...</string>
+   </property>
+  </action>
+  <action name="actionSelect_Cell_Shapes">
+   <property name="text">
+    <string>Select Cell Shapes..</string>
+   </property>
+  </action>
+  <action name="actionSelect_Trajectories">
+   <property name="text">
+    <string>Select Trajectories...</string>
+   </property>
+  </action>
+  <action name="actionSave_Stable_Neighbors">
+   <property name="text">
+    <string>Save Stable Neighbors...</string>
+   </property>
+  </action>
+  <action name="actionSave_Neighbor_Swaps">
+   <property name="text">
+    <string>Save Neighbor Swaps...</string>
+   </property>
+  </action>
+  <action name="actionSave_Neighbor_Analysis">
+   <property name="text">
+    <string>Save Neighbor Analysis...</string>
+   </property>
+  </action>
+  <action name="actionSave_Neighbor_Counts">
+   <property name="text">
+    <string>Save Neighbor Counts...</string>
+   </property>
+  </action>
+  <action name="actionSave_All_Trajectories">
+   <property name="text">
+    <string>Save All Trajectories...</string>
+   </property>
+  </action>
+  <action name="actionSelect_1_Neighbors">
+   <property name="text">
+    <string>Select 1 Neighbors...</string>
+   </property>
+  </action>
+  <action name="actionSelect_2_Neighbors">
+   <property name="text">
+    <string>Select 2 Neighbors...</string>
+   </property>
+  </action>
+  <action name="actionSelect_1_2_Neighbors_Right">
+   <property name="text">
+    <string>Select 1,2 Neighbors Right...</string>
+   </property>
+  </action>
+  <action name="actionSelect_1_2_Neighbors_Left">
+   <property name="text">
+    <string>Select 1,2 Neighbors Left...</string>
+   </property>
+  </action>
+  <action name="actionSave_Contact_Analysis">
+   <property name="text">
+    <string>Save Contact Analysis...</string>
+   </property>
+  </action>
+  <action name="actionSelect_Custom_Neighbors_All">
+   <property name="text">
+    <string>Select Custom Neighbors All...</string>
+   </property>
+  </action>
+  <action name="actionSave_Processing">
+   <property name="text">
+    <string>Save Processing</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>_3dView</class>
+   <extends>QWidget</extends>
+   <header>3dview.hpp</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
