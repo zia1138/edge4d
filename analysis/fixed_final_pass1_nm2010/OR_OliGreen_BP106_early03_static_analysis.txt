@@ -1,0 +1,2 @@
+frame	time	nucs	cells	missed_nuc	detected	split	merged	junk	mergesplit
+0	0	782	115	732	50	0	0	0	0
