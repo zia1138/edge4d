@@ -382,7 +382,6 @@ namespace edge {
     map<int, int> nuc_traj_id2nuc; // map from trajectory id to nuc
 
     vector< vector<ivec3> > cell_voxels;  // Segmented cell voxels.
-    vector< vector<ivec3> > ACME_cell_voxels;  // Segmented cell voxels.
 
     vector< vector<int> > cell_neighbors; // Neighbor indices for each cell (index in cell_voxels).
     vector< vector<ivec3> > cell_surface_voxels; // Surface voxels of segmented cells.
@@ -416,13 +415,7 @@ namespace edge {
       if(bvh != NULL) delete bvh; if(bvh_nuc != NULL) delete bvh_nuc;
     }
 
-    void process_ACME();
-
     void process() {
-      cout << "(image_stack) conf.analysis.id = "  << conf.analysis_id << endl;
-      if(conf.analysis_id == analysis::ACME_Compare) {
-	process_ACME();
-      }
       pre_process();
       cout << "(image_stack) conf.analysis.id = "  << conf.analysis_id << endl;
       switch(conf.analysis_id) {
@@ -434,7 +427,7 @@ namespace edge {
 	process_nucs(); 
 	break;
       case analysis::NucsMembranes:  case analysis::StaticAnalysis:  
-      case analysis::ManualGroundTruth:  case analysis::ACME_Compare:
+      case analysis::ManualGroundTruth:
 	process_edge(); process_nucs(); break;
       default: break; 
       }           
@@ -460,10 +453,6 @@ namespace edge {
 
     bool is_border_touch(vector<ivec3> &vox);
 
-    // Fernandez et al. 2010. Imaging plant growth in 4D: robust tissue reconstruction and 
-    // lineaging at cell resolution. Nat Methods 7:547–553
-    void process_NM2010(); 
-    
     void process_edge(); // Extracts membrane signal.
     void process_nucs(); // Extracts nuclei signal.
 
@@ -648,7 +637,7 @@ namespace edge {
     }
 
     void global_analysis(string filename) {
-      if(conf.analysis_id == analysis::StaticAnalysis || conf.analysis_id == analysis::ACME_Compare) static_analysis(filename);
+      if(conf.analysis_id == analysis::StaticAnalysis) static_analysis(filename);
     }
 
     void save_analyze_trajectories(string filename);

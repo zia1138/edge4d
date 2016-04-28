@@ -20,123 +20,6 @@ using namespace util;
 
 
 namespace edge {
-  void image_stack::process_ACME() {
-    float average_radius = 0.3; 
-    float plate_measure = 0.7;
-    float voting_field = 1.0;
-    float membrane_segmentation = 1.0;
-
-    if(vs16.size() == 0) { cout << "no channels to process" << endl; exit(1); }
-
-    // Re-scale if 16-bit.
-    if(vs16[conf.edge_channel-1]->is8bitOriginal == false)  stretch16(vs16[conf.edge_channel-1], conf.threads);
-
-    volume8 *edge = new volume8(*vs16.at(conf.edge_channel-1));
-
-    ostringstream cmd, file;
-    file << "ACME/" << basename << "ACME_input_" << frame_num <<  ".mha";
-    string filename = file.str();
-    edge->save_mha(filename, conf.voxelX, conf.voxelY, conf.voxelZ);
-
-    // Resample Step.
-    float alphaX = 1, alphaY = 1, alphaZ = 1;
-
-    if(conf.voxelX < conf.voxelY) alphaX = conf.voxelY / conf.voxelX;
-    else alphaY = conf.voxelY / conf.voxelX;
-
-    if(conf.scaleToZ) {
-      alphaX *= conf.voxelZ / max(conf.voxelX, conf.voxelY);
-      alphaY *= conf.voxelZ / max(conf.voxelX, conf.voxelY);
-      alphaY += 0.00001;
-    }
-    else {
-      cout << "scale to z is false" << endl;
-      alphaZ = max(conf.voxelX, conf.voxelY) / conf.voxelZ;
-    }
-
-    if(conf.scalef != 1.0f) {
-      alphaX /= conf.scalef;
-      alphaY /= conf.scalef;
-      alphaZ /= conf.scalef;      
-    }
-
-    // Processing not necessary if final segmentation file exists.
-    string final_file = filename + ".final.mha";
-    if(!QFileInfo(QString(final_file.c_str())).exists()) {
-      int retval;
-      // Pre-processing
-      cmd << "ACME/cellPreprocess " << filename << " " << filename << ".preprocess.mha "  << average_radius;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-
-      cmd << "ACME/resample " << filename << ".preprocess.mha " << filename << ".resampled.mha ";
-      cmd << fixed << setprecision(5) << alphaX << " " << alphaY << " " << alphaZ;
-      cout << cmd.str() << endl;
-      cout << "conf.voxel_alpha()=" << conf.voxel_alpha() << endl;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-
-      cmd << "ACME/multiscalePlateMeasureImageFilter " << filename << ".resampled.mha " <<  filename << ".planarity.mha "  << filename << ".eigen.mha " <<  plate_measure;
-      cout << cmd.str() << endl;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-
-      cmd << "ACME/membraneVotingField3D " << filename << ".planarity.mha " <<  filename << ".eigen.mha " << filename << ".TV.mha "  << voting_field;
-      cout << cmd.str() << endl;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-
-      cmd << "ACME/membraneSegmentation " << filename << ".resampled.mha " << filename << ".TV.mha " <<  filename << ".segment.mha " << membrane_segmentation;
-      cout << cmd.str() << endl;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-
-      cmd << "ACME/c3d " << filename << ".segment.mha " << filename << ".final.mha";
-      cout << cmd.str() << endl;
-      retval = system(cmd.str().c_str());
-      cmd.str(""); cmd.clear();
-    }
-    else {
-      cerr << "final segmentation file exists" << endl;
-    }
-
-    // Load final and fill cell voxels.
-    int ACME_width = edge->width / alphaX;
-    int ACME_height = edge->height / alphaY;
-    int ACME_depth = edge->depth / alphaZ;
-
-    iwidth = ACME_width;
-    iheight = ACME_height;
-    idepth = ACME_depth;
-    ichannels = 1;
-
-    cout << "ACME_width=" << ACME_width << endl;
-    cout << "ACME_height=" << ACME_height << endl;
-    cout << "ACME_depth=" << ACME_depth << endl;
-    
-    volume32 labels(ACME_width, ACME_height, ACME_depth);
-    labels.load_mha_float(filename + ".final.mha");
-    labels.components(ACME_cell_voxels);
-    cout << "ACME_cell_voxels.size()=" << ACME_cell_voxels.size() << endl;
-    //exit(1);
-
-    volume32 disp32(ACME_width, ACME_height, ACME_depth);
-    disp32.load_mha_float("test.mha");
-    volume8 disp(ACME_width, ACME_height, ACME_depth);
-    for(int z = 0; z < disp.depth; z++) 
-      for(int y = 0; y < disp.height; y++) 
-	for(int x = 0; x < disp.width; x++) {
-	  disp(x,y,z) = max((int)disp32(x,y,z) - 100, 0);
-	}
-    dispvols.push_back(new volume8(disp));
-    cout << "dispvols.size()=" << dispvols.size() << endl;
-    cout << dispvols.back()->width << " ";
-    cout << dispvols.back()->height << " ";
-    cout << dispvols.back()->depth << " ";
-    cout << endl;
-    delete edge;
-  }
-
   void image_stack::pre_process() {
     if(vs16.size() == 0) { cout << "no channels to pre-process" << endl; return; }
     vs.resize(vs16.size());
@@ -406,104 +289,6 @@ namespace edge {
     }
 
     delete bv; 
-  }
-
-  // Based on the code here.
-  // Last accessed August 2, 2012.
-  // http://openalea.gforge.inria.fr/doc/vplants/vtissue/doc/_build/html/_modules/vplants/mars_alt/mars/segmentation.html
-  // and
-  // http://openalea.gforge.inria.fr/beta_doc/vplants/vtissue/doc/_build/html/reference/asclepios.html
-  void image_stack::process_NM2010() {
-    volume8 *venh = new volume8(*vs.at(conf.edge_channel-1)); 
-
-    // Filtering algorithms. 
-    if(conf.use_ASF) { 
-      // Alternating 
-      for(int r = 1; r <= conf.maxASF_rad; r++) {
-	// Open
-	rankfilt(*venh, r, 0.0000001, conf.threads); // Grayscale erode.
-	rankfilt(*venh, r, 0.9999999, conf.threads); // Grayscale dilate
-	// Close
-	rankfilt(*venh, r, 0.9999999, conf.threads); // Grayscale dilate
-	rankfilt(*venh, r, 0.0000001, conf.threads); // Grayscale erode.
-      }
-    } // Gaussian blur.
-    else { for(int dim = 0; dim < 3; dim++) blur(venh, (gauss_dim)dim, conf.filter_sigma, conf.threads);  }
-
-    if(conf.keep_processing) dispvols.push_back(new volume8(*venh)); 
-
-    // Apply background threhsold. Keep largest component as background marker
-    volume8 bgthresh(iwidth, iheight, idepth); 
-    venh->below_threshold(bgthresh, conf.bgseed_thresh);
-    vector< vector<ivec3> > bgthresh_comps;    bgthresh.components(bgthresh_comps, 0, 255);
-
-    vector<ivec3> bgcomp;
-    cout << "bgthresh_comps.size()=" << bgthresh_comps.size() << endl;
-    if(bgthresh_comps.size() > 0) {
-      sort(bgthresh_comps.begin(), bgthresh_comps.end(), cmp_size_gt<ivec3>());
-      bgcomp = bgthresh_comps[0];
-    }
-    bgthresh.fill(0);
-    for(size_t b = 0; b < bgcomp.size(); b++) bgthresh(bgcomp[b]) = 255;
-    if(conf.keep_processing) dispvols.push_back(new volume8(bgthresh));
-
-    // Seed by computing h-minima.
-    volume32 vh1(iwidth, iheight, idepth), vh2(iwidth, iheight, idepth);
-    for(int z = 0; z < idepth; z++) 
-      for(int y = 0; y < iheight; y++) 
-	for(int x = 0; x < iwidth; x++) {
-	  int v = venh->v(x,y,z);
-	  v = 255 - v; // invert 
-	  vh1(x,y,z) = v;
-	  vh2(x,y,z) = v - conf.h_seed;
-	}
-    
-    grayscale_reconstruct(vh2, vh1);
-    
-    for(int z = 0; z < idepth; z++) 
-      for(int y = 0; y < iheight; y++) 
-	for(int x = 0; x < iwidth; x++) vh2(x,y,z) = vh1(x,y,z) - vh2(x,y,z);
-
-    volume8 x(iwidth, iheight, idepth);
-    vh2.hystersis_threshold(x, 1, conf.h_seed);
-
-    for(size_t b = 0; b < bgcomp.size(); b++) x(bgcomp[b]) = 0;
-
-    if(conf.keep_processing) dispvols.push_back(new volume8(x));
-
-    // Seed background and h-minima detected cells.
-    vector< vector<ivec3> > seeds;
-    x.components(seeds, 0, 255);
-    seeds.push_back(bgcomp);
-    
-    vh2.fill(0);
-    cout << "seeds.size()=" << seeds.size() << endl;
-    vh2.seed(seeds);
-    for(int z = 0; z < idepth; z++) 
-      for(int y = 0; y < iheight; y++) 
-	for(int x = 0; x < iwidth; x++) vh1(x,y,z) = 255 - vh1(x,y,z);
-
-    vh2.watershed(vh1);   
-    seeds.clear(); vh2.components(seeds);
-
-    // Re-seed based on volume threshold
-    vector< vector<ivec3> > seeds2;
-    for(size_t s = 0; s < seeds.size(); s++) {
-      if((int)seeds[s].size() > conf.error_vox_thresh) seeds2.push_back(seeds[s]);
-    }
-
-    // Apply watershed again and save all but the background region.
-    cout << "seeds2.size()=" << seeds2.size() << endl;
-    vh2.seed(seeds2);
-    vh2.watershed(vh1);
-    seeds2.clear(); vh2.components(seeds2);
-    size_t max_sz = 0;
-    for(size_t s = 0; s < seeds2.size(); s++) max_sz = max(max_sz, seeds2[s].size());
-    for(size_t s = 0; s < seeds2.size(); s++) {
-      if(seeds2[s].size() != max_sz) cell_voxels.push_back(seeds2[s]);
-    }
-
-    delete venh;
   }
 
   void image_stack::process_edge() {
@@ -1632,44 +1417,31 @@ namespace edge {
     void run() {
       // Move this to a thread.
       for(size_t t = time_start; t < stacks.size(); t += time_step) {
-	if(conf.run_NM2010 && split_nucs == false) stacks[t]->process_NM2010();
-	else {
-	  // Create a binary volume with edge voxels.
-	  volume8 bv(stacks[t]->iwidth, stacks[t]->iheight, stacks[t]->idepth);
-	  vector<ivec3> &edge_voxels = stacks[t]->edge_voxels;
-	  for(size_t e = 0; e < edge_voxels.size(); e++) bv(edge_voxels[e]) = 255;
-	  if(conf.analysis_id == analysis::NucsMembranes || conf.analysis_id == analysis::NucsOnly || split_nucs) {	    
-	    // Use hybrid edge/nuc segmentatiion to generate cells.
+	// Create a binary volume with edge voxels.
+	volume8 bv(stacks[t]->iwidth, stacks[t]->iheight, stacks[t]->idepth);
+	vector<ivec3> &edge_voxels = stacks[t]->edge_voxels;
+	for(size_t e = 0; e < edge_voxels.size(); e++) bv(edge_voxels[e]) = 255;
+	if(conf.analysis_id == analysis::NucsMembranes || conf.analysis_id == analysis::NucsOnly || split_nucs) {	    
+	  // Use hybrid edge/nuc segmentatiion to generate cells.
+	  stacks[t]->cell_voxels.clear();
+	  HSegment3_Nucs(*stacks[t]->vs.at(conf.edge_channel-1), bv, stacks[t]->nuc_voxels,
+			 1, conf.max_hole_rad, conf.internal_limit, 
+			 stacks[t]->cell_voxels, 
+			 conf.min_comp_vol, conf.max_comp_vol, conf.noise_comp_vol);
+	  if(split_nucs) {
+	    // Use segemntatiion to split cells.
+	    stacks[t]->split_nucs();
 	    stacks[t]->cell_voxels.clear();
-	    HSegment3_Nucs(*stacks[t]->vs.at(conf.edge_channel-1), bv, stacks[t]->nuc_voxels,
-			   1, conf.max_hole_rad, conf.internal_limit, 
-			   stacks[t]->cell_voxels, 
-			    conf.min_comp_vol, conf.max_comp_vol, conf.noise_comp_vol);
-	    if(split_nucs) {
-	      // Use segemntatiion to split cells.
-	      stacks[t]->split_nucs();
-	      stacks[t]->cell_voxels.clear();
-	    }
-	   }
-	   else {
-	     if(conf.analysis_id == analysis::ACME_Compare) {
-	       cout << "ACME compare fill cell voxels" << endl;
-	       for(size_t a = 0; a < stacks[t]->ACME_cell_voxels.size(); a++) {
-		 int nvox = stacks[t]->ACME_cell_voxels[a].size();
-		 if(stacks[t]->conf.min_comp_vol <= nvox && nvox <= stacks[t]->conf.max_comp_vol) 
-		   stacks[t]->cell_voxels.push_back(stacks[t]->ACME_cell_voxels[a]);
-	       }
-	     }
-	     else {
-	       vector< vector<ivec3> > nuc_vox_empty;
-	       HSegment3_Nucs(*stacks[t]->vs.at(conf.edge_channel-1), bv, nuc_vox_empty,
-			      1, conf.max_hole_rad, conf.internal_limit, 
-			      stacks[t]->cell_voxels, 
-			      conf.min_comp_vol, conf.max_comp_vol, conf.noise_comp_vol);	     
-	     }
-	   }
-	  stacks[t]->find_cell_neighbors2();
-	 }
+	  }
+	}
+	else {
+	  vector< vector<ivec3> > nuc_vox_empty;
+	  HSegment3_Nucs(*stacks[t]->vs.at(conf.edge_channel-1), bv, nuc_vox_empty,
+			 1, conf.max_hole_rad, conf.internal_limit, 
+			 stacks[t]->cell_voxels, 
+			 conf.min_comp_vol, conf.max_comp_vol, conf.noise_comp_vol);	     
+	}
+	stacks[t]->find_cell_neighbors2();
        }
      }
    };
@@ -1756,7 +1528,7 @@ namespace edge {
       if(conf.repair_nucs) run_segmentation(true);
       track_nucs_centroid2();  
     }
-    if(conf.analysis_id == analysis::StaticAnalysis || conf.analysis_id == analysis::ACME_Compare) {
+    if(conf.analysis_id == analysis::StaticAnalysis) {
       if(conf.repair_nucs) run_segmentation(true);
     }
     if(conf.analysis_id == analysis::NucsOnly) {
@@ -1772,7 +1544,7 @@ namespace edge {
     }
     if(conf.analysis_id == analysis::NucsMembranes || conf.analysis_id == analysis::CellShapes     ||
        conf.analysis_id == analysis::DorsalFolds   || conf.analysis_id == analysis::StaticAnalysis ||
-       conf.analysis_id == analysis::ACME_Compare  || conf.analysis_id == analysis::ManualGroundTruth) {
+       conf.analysis_id == analysis::ManualGroundTruth) {
       if(conf.run_mesh) {
 	run_segmentation();
 	if(conf.analysis_id == analysis::NucsMembranes) {

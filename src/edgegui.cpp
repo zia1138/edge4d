@@ -208,7 +208,7 @@ void EdgeWin::keyPressEvent(QKeyEvent *event ) {
 void EdgeWin::on_actionSave_Analysis_triggered() {
   if(project == NULL) return;
   QString defaultname = project->basename.c_str();
-  if(project->conf.analysis_id == analysis::StaticAnalysis || project->conf.analysis_id == analysis::ACME_Compare)  
+  if(project->conf.analysis_id == analysis::StaticAnalysis )  
     defaultname += "_static_analysis.txt";
   else if(project->conf.analysis_id == analysis::ManualGroundTruth)
     defaultname += "_manual_groundtruth.txt";
@@ -809,7 +809,6 @@ void ParamWin::updateMicrons() {
   spinMaxHoleRadMicrons->setValue(voxel2microns(spinMaxHoleRad->value()));
   spinMinCompVolMicrons->setValue(voxel2microns3(spinMinCompVol->value()));
   spinMaxCompVolMicrons->setValue(voxel2microns3(spinMaxCompVol->value()));
-  spinErrorVoxThreshMicrons->setValue(voxel2microns3(spinErrorVoxThresh->value()));
 }
 
 void ParamWin::updateBoundaryValues(int idx) {
@@ -917,15 +916,6 @@ ParamWin::ParamWin(edgeconfig &conf_, QWidget *parent) :
   spinRefineIter->setValue(conf.refine_iter);
 
   spinNeighborContactAlpha->setValue(conf.neighbor_alpha);
-
-  // NM 2010 parameters
-  if(conf.run_NM2010) checkRunNM2010->setCheckState(Qt::Checked); else checkRunNM2010->setCheckState(Qt::Unchecked);
-  if(conf.use_ASF) checkUseASF->setCheckState(Qt::Checked); else checkUseASF->setCheckState(Qt::Unchecked);
-  spinMaxASFRad->setValue(conf.maxASF_rad);
-  spinFilterSigma->setValue(conf.filter_sigma);
-  spinBgSeedThresh->setValue(conf.bgseed_thresh);
-  spinHseed->setValue(conf.h_seed);
-  spinErrorVoxThresh->setValue(conf.error_vox_thresh);
 }
 
 // Collect user updated parameter values from dialog entries. 
@@ -1011,15 +1001,6 @@ void ParamWin::on_loadButton_clicked(bool) {
   conf.refine_alpha = spinRefineAlpha->value();
   conf.refine_stepsize = spinRefineStep->value();
   conf.refine_iter = spinRefineIter->value();
-
-  conf.run_NM2010 = checkRunNM2010->checkState() == Qt::Checked;
-
-  conf.use_ASF = checkUseASF->checkState() == Qt::Checked;
-  conf.maxASF_rad = spinMaxASFRad->value();
-  conf.filter_sigma = spinFilterSigma->value();
-  conf.bgseed_thresh = spinBgSeedThresh->value();
-  conf.h_seed = spinHseed->value();
-  conf.error_vox_thresh = spinErrorVoxThresh->value();
 
   accept(); 
 }

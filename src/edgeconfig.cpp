@@ -102,15 +102,6 @@ public:
       conf.refine_stepsize = fromString(attr.value("refine_stepsize"), conf.refine_stepsize);
       conf.neighbor_alpha = fromString(attr.value("neighbor_alpha"), conf.neighbor_alpha);
     }
-    else if(qName == "NM2010") {
-      conf.run_NM2010 = attr.value("run_NM2010").toInt() != 0;
-      conf.use_ASF = attr.value("use_ASF").toInt() != 0;
-      conf.maxASF_rad = fromString(attr.value("maxASF_rad"), conf.maxASF_rad);	
-      conf.filter_sigma = fromString(attr.value("filter_sigma"), conf.filter_sigma);	
-      conf.bgseed_thresh = fromString(attr.value("bgseed_thresh"), conf.bgseed_thresh);
-      conf.h_seed = fromString(attr.value("h_seed"), conf.h_seed);
-      conf.error_vox_thresh = fromString(attr.value("error_vox_thresh"), conf.error_vox_thresh);
-    }
     else if(qName == "boundary") {
       boundaryconf_t b_conf;
       b_conf.sigma_high = fromString(attr.value("sigma_high"), b_conf.sigma_high);
@@ -123,12 +114,6 @@ public:
       b_conf.endframe = fromString(attr.value("endframe"), b_conf.endframe);
       if(b_conf.startframe == 0 && b_conf.endframe == 0) conf.boundaryconf.at(0) = b_conf;
       else conf.boundaryconf.push_back(b_conf);
-    }
-    else if(qName == "ACME") {
-      conf.ACME_average_radius = fromString(attr.value("average_radius"), conf.ACME_average_radius);
-      conf.ACME_plate_measure = fromString(attr.value("plate_measure"), conf.ACME_plate_measure);
-      conf.ACME_voting_field = fromString(attr.value("voting_field"), conf.ACME_voting_field);
-      conf.ACME_membrane_segmentation = fromString(attr.value("membrane_segmentation"), conf.ACME_membrane_segmentation);
     }
     return true;
   }
@@ -252,24 +237,6 @@ bool edgeconfig::save_xml(string filename) {
   conf << "noise_comp_vol=\"" << noise_comp_vol << "\" ";
   V(conf, "neighbor_alpha", neighbor_alpha);
   conf << "/>" << endl << endl;
-
-  conf << "<NM2010 ";
-  B(conf, "run_NM2010", run_NM2010);
-  B(conf, "use_ASF", use_ASF);
-  V(conf, "maxASF_rad", maxASF_rad);
-  V(conf, "filter_sigma", filter_sigma);
-  V(conf, "bgseed_thresh", bgseed_thresh);
-  V(conf, "h_seed", h_seed);
-  V(conf, "error_vox_thresh", error_vox_thresh);
-  conf << "/>" << endl << endl;
-
-  conf << "<ACME ";
-  V(conf, "average_radius", ACME_average_radius);
-  V(conf, "plate_measure", ACME_plate_measure);
-  V(conf, "voting_field", ACME_voting_field);
-  V(conf, "membrane_segmentation", ACME_membrane_segmentation);
-  conf << "/>" << endl << endl;
-
 
   conf << "</edge>" << endl;
 

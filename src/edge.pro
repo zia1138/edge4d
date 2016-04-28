@@ -15,12 +15,12 @@ QMAKE_CXXFLAGS += -I/usr/local/include
 # Note that for Linux it's best to compile and then install tiff-3.9.5 into /usr/local
 # Make sure you use ./configure --disable-jpeg when building libtiff.
 ## Use statist libtiff when compiling binary for mac users.
-LIBS += -L/usr/local/lib /usr/local/lib/libjpeg.a /usr/local/lib/libtiff.a  -lz
+#LIBS += -L/usr/local/lib /usr/local/lib/libjpeg.a /usr/local/lib/libtiff.a  -lz
 QMAKE_CXXFLAGS += -I/usr/local/include
 ##LIBS += -L/usr/local/lib -ltiff  -lz 
 #}
 #unix {
-#  LIBS += -ltiff
+LIBS += -ltiff
 #}
 win32 {
    QMAKE_CFLAGS += "/D_HAS_ITERATOR_DEBUGGING=0 /D_SECURE_SCL=0"

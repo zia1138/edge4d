@@ -19,7 +19,7 @@ namespace analysis {
 
   const int StaticAnalysis = 5; // get through these analyses one by one
   const int ManualGroundTruth = 6;
-  const int ACME_Compare = 7;
+  const int SPIMTest = 7;
 
   // Static analysis error types. 
   const int StaticNoError = 0;
@@ -102,21 +102,8 @@ struct edgeconfig {
   int refine_iter;
   // -----------------------------
 
-  // NM2010 params
-  bool run_NM2010;
-  bool use_ASF; int maxASF_rad;
-  float filter_sigma;
-  int bgseed_thresh;
-  int h_seed;
-  int error_vox_thresh;
-
   // Measurement parmeters
   float baz_thresh_pcent;
-
-  float ACME_average_radius;
-  float ACME_plate_measure;
-  float ACME_voting_field;
-  float ACME_membrane_segmentation;
 
   // Constructor sets default paramters.
   edgeconfig() {
@@ -178,19 +165,6 @@ struct edgeconfig {
     refine_sigma = 3; refine_dist = 2; 
     refine_iter = 10;
     refine_alpha = 0.8; refine_stepsize = 0.2;
-
-    run_NM2010 = false; 
-    use_ASF = false; 
-    maxASF_rad = 2;
-    filter_sigma = 1.0;
-    bgseed_thresh = 4;
-    h_seed = 4; // h_seed should be less than equal to bgseed_thresh?
-    error_vox_thresh = 100;
-
-    ACME_average_radius = 0.3; 
-    ACME_plate_measure = 0.7;
-    ACME_voting_field = 1.0;
-    ACME_membrane_segmentation = 1.0;
 
     // measurement parameters
     baz_thresh_pcent = 0.99;

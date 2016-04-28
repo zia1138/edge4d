@@ -78,8 +78,7 @@ private slots:
   void on_actionToggle_Nuclei_triggered() { 
     if(project == NULL || view == NULL) return;
     view->toggleDisplayNucs(); 
-    if(project->conf.analysis_id == analysis::ACME_Compare || 
-       project->conf.analysis_id == analysis::StaticAnalysis) {
+    if(project->conf.analysis_id == analysis::StaticAnalysis) {
       project->stacks[cur_stack]->toggle_all_nucs();
     }
     else {
