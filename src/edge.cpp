@@ -56,6 +56,12 @@ namespace edge {
       // Scale volume globally. 
       if(conf.scalef != 1.0f) vs[c] = scaleXYZ(vs[c], conf.scalef, conf.threads);
 
+      if(conf.analysis_id == analysis::SPIMTest && vs.size() == 4) {
+	if(c == 1 || c == 4) {
+	  vs[c]->rotate180();
+	}
+      }
+      
       cout << "channel = " << c << endl;
       cout << "scaled dimensions:" << vs[c]->width << " x " << vs[c]->height << " x " << vs[c]->depth << endl;
       cout << "voxel_alpha() = " << conf.voxel_alpha() << endl;

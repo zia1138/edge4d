@@ -407,6 +407,7 @@ namespace vol {
 	  for(int x = 0; x < width; x++) 
 	    v(x,y,z) = hv.map(x * sx, y * sy, z * sz, v(x,y,z));
     }
+
   };
 
 
