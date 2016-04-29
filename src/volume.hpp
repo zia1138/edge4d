@@ -279,6 +279,14 @@ namespace vol {
  	  for(int vx = 0; vx < width; vx++) v(vx,vy,vz) = src.nearest(vx * sx, vy * sy, vz * sz);
     }
 
+    void mirrorx(volumeT<T> &src) {
+      for(int z = 0; z < depth; z++)
+	for(int y = 0; y < height; y++)
+	  for(int x = 0; x < width; x++) {
+	    v(x,y,z) = src((width - 1) - x, y, z);
+	  }
+    }
+    
     // Use octtree recursion to limit voxels interseced with vertex
     // ray.  (x,y,z) and (x+dim,y+dim,z+dim) define octtree cube at
     // current recursion.

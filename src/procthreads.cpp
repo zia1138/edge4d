@@ -166,7 +166,8 @@ volume8 *scaleToZ(volume8 *src, float sxy, int num_threads) {
 volume8 *scaleToXY(volume8 *src, float sz, int num_threads) {
   if(fabs(sz - 1.0f) < 1e-5) return src; // no scaling necssary
   cout << "BLUR Z SIGMA = " << px2sigma(2.0f/sz) << endl;
-  if(sz < 1) blur(src, DimZ, px2sigma(2.0f/sz), num_threads);
+  if(sz < 1)
+    blur(src, DimZ, px2sigma(2.0f/sz), num_threads);
   int depth = float(src->depth) * sz;
   volume8 *dst = new volume8(src->width, src->height, depth);
   vector<ScaleTricubicThread *> threads;

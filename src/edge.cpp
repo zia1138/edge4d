@@ -56,10 +56,13 @@ namespace edge {
       // Scale volume globally. 
       if(conf.scalef != 1.0f) vs[c] = scaleXYZ(vs[c], conf.scalef, conf.threads);
 
-      if(conf.analysis_id == analysis::SPIMTest && vs.size() == 4) {
-	if(c == 1 || c == 4) {
-	  vs[c]->rotate180();
-	}
+      if(frame_num == 1 || frame_num == 3) {
+	cout << "rotate 180" << endl;
+	  volume8 *src = vs[c];
+	  volume8 *dst = new volume8(src->width, src->height, src->depth);
+	  dst->mirrorx(*src);
+	  delete src;
+	  vs[c] = dst;
       }
       
       cout << "channel = " << c << endl;

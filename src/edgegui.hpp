@@ -143,7 +143,6 @@ private slots:
   void on_spinMaxHoleRad_valueChanged(int) { updateMicrons(); }
   void on_spinMaxCompVol_valueChanged(int) { updateMicrons(); }
   void on_spinMinCompVol_valueChanged(int) { updateMicrons(); }
-  void on_spinErrorVoxThresh_valueChanged(int) { updateMicrons(); }
   void on_listBoundaryRanges_currentRowChanged(int row) { updateBoundaryValues(row); }
 };
 
