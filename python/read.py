@@ -32,10 +32,9 @@ def print_hdf5_item_structure(g, offset = '    '):
             print (offset, key)
             print_hdf5_item_structure(subg, offset+'    ')
 dir = '../../SPIMDataTest/'
-dir_n = 'CriWT_H1_TexasRed/Stack0/'
+#dir_n = 'CriWT_H1_TexasRed/Stack0/'
 dir_m = 'Drosophila_Membrane02/Stack0/'
 mydir = dir_m
-#name = 'Cam_Left_00400'
 name = 'Cam_Right_00030'
 file_name =dir + mydir + name + '.h5'
 print_hdf5_file_structure(file_name)
@@ -57,5 +56,7 @@ except OSError:
 for i in range(num_frames):
     #im = Image.fromarray(data, 'I;16')
     im = Image.fromarray(data[i][:][:], 'I;16')
-    im.save(path+str(i)+'.tiff')
-print 'Done'
+    outfilename = path + ("%5.5d" % i ) + ".tiff"
+    print(outfilename)
+    im.save(outfilename)
+print('Done')
