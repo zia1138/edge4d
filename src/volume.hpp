@@ -286,6 +286,22 @@ namespace vol {
 	    v(x,y,z) = src((width - 1) - x, y, z);
 	  }
     }
+
+
+    void rotate90(volumeT<T> &src) {
+      for(int z = 0; z < depth; z++)
+	for(int y = 0; y < height; y++)
+	  for(int x = 0; x < width; x++) {
+	    int zold = (width - 1) - x;
+	    if(zold >= depth || zold < 0) continue;
+	    int xold = z;
+	    if(xold >= width || xold < 0) continue;	    
+	    v(x,y,z) = src(xold, y, zold);
+	  }
+    }
+    // x stays the same, y and z update.
+    //v(x,y,z) = src(, y, (width-1) - x);
+    //v(x,y,z) = src((width - 1) - x, y, z);
     
     // Use octtree recursion to limit voxels interseced with vertex
     // ray.  (x,y,z) and (x+dim,y+dim,z+dim) define octtree cube at

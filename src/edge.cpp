@@ -57,12 +57,19 @@ namespace edge {
       if(conf.scalef != 1.0f) vs[c] = scaleXYZ(vs[c], conf.scalef, conf.threads);
 
       if(frame_num == 1 || frame_num == 3) {
-	cout << "rotate 180" << endl;
 	  volume8 *src = vs[c];
 	  volume8 *dst = new volume8(src->width, src->height, src->depth);
 	  dst->mirrorx(*src);
 	  delete src;
 	  vs[c] = dst;
+      }
+      if(frame_num == 2 || frame_num == 3) {
+	cout << "rotate90" << endl;
+	volume8 *src = vs[c];
+	volume8 *dst = new volume8(src->width, src->height, src->depth);
+	dst->rotate90(*src);
+	delete src;
+	vs[c] = dst;
       }
       
       cout << "channel = " << c << endl;
