@@ -597,14 +597,20 @@ namespace edge {
   };
 
   struct hyperstack {
-    string filename, basename;
+    string basename;
     edgeconfig conf;  // Global configuration information for hyperstack.
     vector<image_stack *> stacks; // Multiple stacks in a hyperstack.
     vector<string> files;
 
     vector<int> nuc_traj_lengths, traj_lengths; // id -> trajectory length  mapping.
 
-    hyperstack(string filename, edgeconfig &conf) : filename(filename), conf(conf) {}
+    hyperstack(string filename, edgeconfig &conf) : conf(conf) {
+      files.push_back(filename);
+    }
+    hyperstack(vector<string> &filelist, edgeconfig &conf) : conf(conf) {
+      files = filelist;
+    }
+    
     // Free up memory associated with stacks.
     ~hyperstack() { for(size_t i = 0; i < stacks.size(); i++) delete stacks[i];  }
     void run_segmentation(bool split_nucs = false);

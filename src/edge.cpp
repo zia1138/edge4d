@@ -67,7 +67,7 @@ namespace edge {
 	cout << "rotate90" << endl;
 	volume8 *src = vs[c];
 	volume8 *dst = new volume8(src->width, src->height, src->depth);
-	dst->rotate90(*src);
+	dst->rotate90minus(*src);
 	delete src;
 	vs[c] = dst;
       }
@@ -1502,26 +1502,29 @@ namespace edge {
   void hyperstack::load_tiff_stacks() {
     // TODO: Need to handle out of range and errors better at load.
     // Loads each stack in the hyper stack.
-    for(int frame = conf.startframe; frame <= conf.endframe; frame += conf.stepframe) {
-      cout << "frame=" << frame << endl;
-      cout << "conf.channels=" << conf.channels << endl;
-      vector<volume16 *> vs16(conf.channels, NULL);
-      cout << filename << " " << conf.slices << " " << frame << " " << conf.channels << endl;
-      int failed_load = 0;
-      for(int c = 0; c < conf.channels; c++) vs16[c] = new volume16;
-      for(int c = 0; c < conf.channels; c++) {
-	if(!vs16[c]->load(filename, conf.slices, conf.channels, frame, c)) failed_load++;
-      }
-      cout << "done loading" << endl;
-      if(failed_load == 0) {
-	image_stack *stack = new image_stack(basename, vs16, conf);
-	cout << "creating stack" << endl;
-	stack->frame_num = frame;
-	stacks.push_back(stack);
-      }
-      else {
-	cout << "Failed to load " << failed_load << " channels." << endl;
-	for(int c = 0; c < conf.channels; c++) delete vs16[c];
+    for(size_t fid = 0; fid < files.size(); fid++) {
+      for(int frame = conf.startframe; frame <= conf.endframe; frame += conf.stepframe) {
+	cout << "frame=" << frame << endl;
+	cout << "conf.channels=" << conf.channels << endl;
+	vector<volume16 *> vs16(conf.channels, NULL);
+	cout << files[fid] << " " << conf.slices << " " << frame << " " << conf.channels << endl;
+	int failed_load = 0;
+	for(int c = 0; c < conf.channels; c++) vs16[c] = new volume16;
+	for(int c = 0; c < conf.channels; c++) {
+	  if(!vs16[c]->load(files[fid], conf.slices, conf.channels, frame, c)) failed_load++;
+	}
+	cout << "done loading" << endl;
+	if(failed_load == 0) {
+	  image_stack *stack = new image_stack(basename, vs16, conf);
+	  cout << "creating stack" << endl;
+	  stack->frame_num = frame;
+	  if(files.size() > 1) stack->frame_num = fid;
+	  stacks.push_back(stack);
+	}
+	else {
+	  cout << "Failed to load " << failed_load << " channels." << endl;
+	  for(int c = 0; c < conf.channels; c++) delete vs16[c];
+	}
       }
     }
   }

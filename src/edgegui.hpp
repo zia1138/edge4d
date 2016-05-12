@@ -49,6 +49,7 @@ protected:
     int vx = scrollXplane->value(), vy = scrollYplane->value(), vz = scrollZplane->value();
     view->setYZplane(vx); view->setXZplane(vy); view->setXYplane(vz);
   }
+  bool process_project(edgeconfig &conf);
 
 private slots:
   // Menu triggers
@@ -57,7 +58,6 @@ private slots:
   void on_actionSave_Labels_triggered(); // Save .raw segmentation file for MATLAB analysis.
   void on_actionSave_Ortho_Slices_triggered(); // Saves .PNGs slicing through data.
   void on_actionSave_Processing_triggered(); // Saves .PNGS of display volumes.
-
   void on_actionSave_Analysis_triggered();
 
   void on_actionSave_Trajectory_Lengths_triggered();
@@ -74,6 +74,8 @@ private slots:
 
   void on_actionSave_Contact_Analysis_triggered();
 
+  void on_actionLoad_Directory_triggered();
+  
   void on_actionToggle_Colors_triggered() { if(view != NULL) { view->toggleColors(); view->updateGL(); } }
   void on_actionToggle_Nuclei_triggered() { 
     if(project == NULL || view == NULL) return;

@@ -1011,6 +1011,56 @@ struct ProcessThread : public QThread {
   void run() { project->process(); }
 };
 
+void EdgeWin::on_actionLoad_Directory_triggered() {
+  QString stackDir = QFileDialog::getExistingDirectory(this, "Open Directory");
+  if(stackDir == "") return;
+
+  QStringList filters;
+  filters << "*.tiff" << "*.tif" << "*.TIF" << "*.TIFF";
+  QDir dir(stackDir);
+  dir.setSorting(QDir::Name);
+  QStringList fileList = dir.entryList(filters);
+  
+  if(fileList.length() == 0) return;
+
+  vector<string> files;
+  for(int f = 0; f < fileList.length(); f++) {
+    files.push_back(stackDir.toStdString() + "/"  + fileList[f].toStdString());
+  }
+
+  edgeconfig conf;
+  // Load XML configuration file if it exists.
+  QString xmlfile = stackDir + "/edge4d.xml";
+  if(QFile(xmlfile).exists()) conf.load_xml(xmlfile.toStdString());
+
+  // Load parameters from TIFF.
+  if(conf.override_tiff == false) {
+    cout << files[0] << endl;
+    conf.load_tiff(files[0]);
+    cout << "done load tiff" << endl;
+  }
+
+  // Now, display configuration dialog. 
+  ParamWin configure(conf, this); 
+  if(configure.exec() == QDialog::Rejected) return; // User hit cancel.  
+  conf.save_xml(xmlfile.toStdString());   // Save XML file with configuration information.
+
+  edge::hyperstack *old_project = NULL;
+  if(project != NULL) {  old_project = project; cur_stack = 0;  }
+  project = new edge::hyperstack(files, conf);
+  project->basename = stackDir.toStdString();
+
+  cout << "process project " << endl;
+  bool ret = process_project(conf);
+  if(!ret) {
+    project = old_project;
+    return;
+  }
+  setWindowTitle("EDGE4D - " + stackDir);
+  
+  if(old_project != NULL) delete old_project;
+}
+
 void EdgeWin::on_actionLoad_Stack_triggered() {
   QString stackFile = QFileDialog::getOpenFileName(this, "Open File", "", "TIFF (*.tif *.tiff)");
   if(stackFile == "") return;
@@ -1029,8 +1079,6 @@ void EdgeWin::on_actionLoad_Stack_triggered() {
   // Now, display configuration dialog. 
   ParamWin configure(conf, this); 
   if(configure.exec() == QDialog::Rejected) return; // User hit cancel.
-
-  QTime time; time.start();
   
   conf.save_xml(xmlfile.toStdString());   // Save XML file with configuration information.
 
@@ -1040,6 +1088,20 @@ void EdgeWin::on_actionLoad_Stack_triggered() {
   project = new edge::hyperstack(stackFile.toStdString(), conf);
   project->basename = QFileInfo(stackFile).baseName().toStdString();
 
+  bool ret = process_project(conf);
+  if(!ret) {
+    project = old_project;
+    return;
+  }
+  setWindowTitle("EDGE4D - " + QFileInfo(stackFile).fileName());
+  
+  if(old_project != NULL) delete old_project;
+}
+
+
+bool EdgeWin::process_project(edgeconfig &conf) {
+  QTime time; time.start();
+  
   vector<QThread *> threads;  ProcessThread process_thread(project);
   threads.push_back((QThread*)&process_thread);
   progressDialog("Processing image stacks. Please wait.", threads);
@@ -1048,13 +1110,12 @@ void EdgeWin::on_actionLoad_Stack_triggered() {
     delete project;
     project = NULL;
     QMessageBox::critical(this, tr("Error"), tr("Unable to laod any stacks. Please check parameters, and the stack file.") );
-    project = old_project; return;
+    return false;
   }
 
   // NOTE: update_gl() populates vertex buffers and must run in a single (main) thread.
   if(conf.use_GL_buffers) project->update_gl(); 
 
-  setWindowTitle("EDGE4D - " + QFileInfo(stackFile).fileName());
 
   view->setProject(project);
   view->setVol(project->stacks[0]);
@@ -1085,7 +1146,8 @@ void EdgeWin::on_actionLoad_Stack_triggered() {
   // Display an information box with processing information.
   QString procTimeStr = "Run completed in " + QString::number(float(time.elapsed()) / 1e3) +  " seconds.";
   QMessageBox::information(this, tr("Processing time"), procTimeStr);
-  if(old_project != NULL) delete old_project;
+
+  return true;
 }
 
 void EdgeWin::on_actionUpdate_Measurement_Parameters_triggered() {

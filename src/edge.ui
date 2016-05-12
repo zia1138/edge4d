@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1362</width>
-    <height>681</height>
+    <height>683</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -169,7 +169,7 @@
      <x>0</x>
      <y>0</y>
      <width>1362</width>
-     <height>22</height>
+     <height>27</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_View">
@@ -178,6 +178,7 @@
     </property>
     <addaction name="actionLoad_Stack"/>
     <addaction name="separator"/>
+    <addaction name="actionLoad_Directory"/>
     <addaction name="action_Quit"/>
    </widget>
    <widget class="QMenu" name="menu_Analysis">
@@ -518,6 +519,11 @@
   <action name="actionSave_Processing">
    <property name="text">
     <string>Save Processing</string>
+   </property>
+  </action>
+  <action name="actionLoad_Directory">
+   <property name="text">
+    <string>Load Directory....</string>
    </property>
   </action>
  </widget>

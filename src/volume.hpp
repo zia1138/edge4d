@@ -299,6 +299,19 @@ namespace vol {
 	    v(x,y,z) = src(xold, y, zold);
 	  }
     }
+
+    void rotate90minus(volumeT<T> &src) {
+      for(int z = 0; z < depth; z++)
+	for(int y = 0; y < height; y++)
+	  for(int x = 0; x < width; x++) {
+	    int zold = x;
+	    if(zold >= depth || zold < 0) continue;
+	    int xold = (depth - 1) - z;
+	    if(xold >= width || xold < 0) continue;	    
+	    v(x,y,z) = src(xold, y, zold);
+	  }
+    }
+
     // x stays the same, y and z update.
     //v(x,y,z) = src(, y, (width-1) - x);
     //v(x,y,z) = src((width - 1) - x, y, z);

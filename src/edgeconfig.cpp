@@ -245,6 +245,7 @@ bool edgeconfig::save_xml(string filename) {
 
 
 bool edgeconfig::load_tiff(string tiffstack) {
+  cout << "load_tiff (conf)" << tiffstack << endl;
   TIFFSetWarningHandler(NULL); TIFFSetErrorHandler(NULL);
   // Determine image stack depth.
   TIFF *tif = TIFFOpen(tiffstack.c_str(), "r");
@@ -252,8 +253,10 @@ bool edgeconfig::load_tiff(string tiffstack) {
   // Set default values.
   slices = 0; frames = 1; channels = 1; 
   char *raw_description = NULL;
-  TIFFGetField(tif, TIFFTAG_IMAGEDESCRIPTION, &raw_description); 
-  string descr = raw_description;
+  int retval = TIFFGetField(tif, TIFFTAG_IMAGEDESCRIPTION, &raw_description);
+  string descr;
+  if(retval == 1 && raw_description != NULL)   descr = raw_description;
+  cout << "descr =" << descr << endl;
   bool has_slices = false;
   size_t i = 0; 
   while(i < descr.length()) {
