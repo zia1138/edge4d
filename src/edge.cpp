@@ -68,9 +68,20 @@ namespace edge {
 	volume8 *src = vs[c];
 	volume8 *dst = new volume8(src->width, src->height, src->depth);
 	dst->rotate90minus(*src);
+	//dst->rotate90(*src);
 	delete src;
 	vs[c] = dst;
       }
+      /*if(frame_num == 2 || frame_num == 3) {
+	cout << "rotate90" << endl; // -180 rotation required for beads
+	volume8 *src = vs[c];
+	volume8 *dst = new volume8(src->width, src->height, src->depth);
+	//dst->rotate90minus(*src);
+	dst->rotate90(*src);
+	delete src;
+	vs[c] = dst;
+	}*/
+
       
       cout << "channel = " << c << endl;
       cout << "scaled dimensions:" << vs[c]->width << " x " << vs[c]->height << " x " << vs[c]->depth << endl;
@@ -282,7 +293,9 @@ namespace edge {
     bv->components(nuc_voxels, conf.min_nuc_vol, 255); 
     
     // Apply max volume threshold if analyzing nucs only.
-    if(conf.analysis_id == analysis::NucsOnly && conf.repair_nucs == false) {
+    if((conf.analysis_id == analysis::NucsOnly ||
+	conf.analysis_id == analysis::SPIMTest)
+       && conf.repair_nucs == false) {
       vector< vector<ivec3> > nuc_voxels2;
       for(size_t n = 0; n < nuc_voxels.size(); n++) { 
 	if((int)nuc_voxels[n].size() >= conf.min_nuc_vol && 
@@ -1550,7 +1563,7 @@ namespace edge {
     if(conf.analysis_id == analysis::StaticAnalysis) {
       if(conf.repair_nucs) run_segmentation(true);
     }
-    if(conf.analysis_id == analysis::NucsOnly) {
+    if(conf.analysis_id == analysis::NucsOnly || conf.analysis_id == analysis::SPIMTest) {
       // Just build 3d models of nuclei.
       for(size_t t = 0; t < stacks.size(); t++) {
 	stacks[t]->traj_ids = stacks[t]->nuc_traj_ids;
@@ -2340,6 +2353,23 @@ namespace edge {
     }
   }
 
+  void hyperstack::save_nuc_cents(const string &filename) {
+    ofstream output(filename.c_str());
+    output << "frame" << '\t';
+    output << "x" << '\t';
+    output << "y" << '\t';
+    output << "z" << endl;
+    for(size_t t = 0; t < stacks.size(); t++) {
+      int frame = stacks[t]->frame_num;
+      vector<vec3> cents;
+      stacks[t]->nuc_centroids(cents);
+      for(size_t c = 0; c < cents.size(); c++) {
+	output << frame << '\t';
+	output << cents[c][0] << '\t' << cents[c][1] << '\t' << cents[c][2] << endl;
+      }
+    }    
+  }
+  
   void hyperstack::save_dorsalfolds(string filename, vector<int> &traj_ids) {
     ofstream output(filename.c_str());
     output << "frame" << '\t'; // -1

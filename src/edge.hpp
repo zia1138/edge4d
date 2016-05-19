@@ -420,12 +420,13 @@ namespace edge {
       cout << "(image_stack) conf.analysis.id = "  << conf.analysis_id << endl;
       switch(conf.analysis_id) {
       case analysis::VolViewer: break;
+	//case analysis::SPIMTest: process_nucs(); break;	
       case analysis::CellShapes: process_edge(); break;
       case analysis::DorsalFolds: process_edge(); break;
       case analysis::NucsOnly: 
 	if(ichannels != 1 && (conf.edge_channel - 1) >= 0) process_edge();
 	process_nucs(); 
-	break;
+	break;	
       case analysis::NucsMembranes:  case analysis::StaticAnalysis:  
       case analysis::ManualGroundTruth:
 	process_edge(); process_nucs(); break;
@@ -672,6 +673,8 @@ namespace edge {
       }
       save_dorsalfolds(filename, traj_ids_all);
     }
+
+    void save_nuc_cents(const string &filename);
   };
 };
 

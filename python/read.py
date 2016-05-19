@@ -61,13 +61,14 @@ def extract_and_save(file_name, dst_dir):
         
 #srcdir = '../../SPIMDataTest/Drosophila_Membrane02/'
 
-srcdir = "../../SPIMDataTest/Drosophila_mCherry_Membrane_02/2016-01-19_17.47.58/"
+#srcdir = "../../SPIMDataTest/Drosophila_mCherry_Membrane_02/2016-01-19_17.47.58/"
 #srcdir = "../../SPIMDataTest/Drosophila_mCherry_Membrane_02/beads/2016-01-20_16.09.38/"
+srcdir = "../../SPIMDataTest/Drosophila_mCherry_Membrane_02/beads/2016-01-20_16.14.22/"
 
 stack01dirs = ["Stack_0_Channel_0", "Stack_1_Channel_0"]
 
 for subdir in stack01dirs:
-    camfiles = glob.glob(srcdir + subdir +  "/*_00034.h5")
+    camfiles = glob.glob(srcdir + subdir +  "/*_00000.h5")
     for cam in camfiles:
         camname = cam.split("/")[-1:]
         dst_dir = subdir + "/" + camname[0]
@@ -75,7 +76,7 @@ for subdir in stack01dirs:
 
     
 for subdir in stack01dirs:
-    camfiles = glob.glob(subdir +  "/*_00034.h5")
+    camfiles = glob.glob(subdir +  "/*_00000.h5")
     for cam in camfiles:
         camname = cam.split("/")[-1:][0]
         files =glob.glob(cam + "/*.tiff")

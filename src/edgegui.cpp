@@ -214,6 +214,8 @@ void EdgeWin::on_actionSave_Analysis_triggered() {
     defaultname += "_manual_groundtruth.txt";
   else if(project->conf.analysis_id == analysis::DorsalFolds) 
     defaultname += "_dorsalfolds.txt";
+  else if(project->conf.analysis_id == analysis::SPIMTest)
+    defaultname = "spimtest.txt";
   else
     return;
 
@@ -229,6 +231,8 @@ void EdgeWin::on_actionSave_Analysis_triggered() {
     else
       project->save_dorsalfolds(fileName.toStdString(), cur_selected_traj);
   }
+  else if(project->conf.analysis_id == analysis::SPIMTest)
+    project->save_nuc_cents(fileName.toStdString());
   else
     project->global_analysis(fileName.toStdString());
   
