@@ -420,7 +420,7 @@ namespace edge {
       cout << "(image_stack) conf.analysis.id = "  << conf.analysis_id << endl;
       switch(conf.analysis_id) {
       case analysis::VolViewer: break;
-	//case analysis::SPIMTest: process_nucs(); break;	
+	//case analysis::SPIMTest: process_nucs(); break;
       case analysis::CellShapes: process_edge(); break;
       case analysis::DorsalFolds: process_edge(); break;
       case analysis::NucsOnly: 
@@ -456,7 +456,8 @@ namespace edge {
 
     void process_edge(); // Extracts membrane signal.
     void process_nucs(); // Extracts nuclei signal.
-
+    void process_align(image_stack *stack);
+    
     // Collect centroids of nuc voxels.
     void nuc_centroids(vector<vec3> &nuc_cent) {
       nuc_cent.resize(nuc_voxels.size());

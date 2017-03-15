@@ -7,6 +7,10 @@
 #include <stdlib.h>
 #include <limits>
 
+
+// TODO: Replace all uses of vec3 with QVector.
+#include <QMatrix4x4>
+
 #include "geometry.hpp"
 
 namespace vol {
@@ -259,6 +263,7 @@ namespace vol {
       int x = roundf(xd), y = roundf(yd), z = roundf(zd);
       // Catch out of bounds case, and return value.
       if(x >= width) x = width - 1; if(y >= height) y = height - 1; if(z >= depth) z = depth - 1;
+      if(x < 0) x = 0; if(y < 0) y = 0; if(z < 0) z = 0;
       return v(x,y,z);
     }
     T & operator () (int x, int y, int z = 0) { return v(x,y,z); } 
@@ -312,6 +317,23 @@ namespace vol {
 	  }
     }
 
+    double correlation(volumeT<T> &src) {
+      double corr = 0;
+      for(int z = 0; z < depth; z++)
+	for(int y = 0; y < height; y++)
+	  for(int x = 0; x < width; x++)  corr += v(x,y,z) * src(x,y,z);
+      return corr;
+    }
+
+    void ridged(volumeT<T> &src, QMatrix4x4 &transform) {
+      for(int z = 0; z < depth; z++)
+	for(int y = 0; y < height; y++)
+	  for(int x = 0; x < width; x++) {
+	    QVector4D p = transform.map(QVector4D(x,y,z, 1));
+	    v(x,y,z) = src.nearest(p.x(), p.y(), p.z());
+	  }
+    }
+    
     // x stays the same, y and z update.
     //v(x,y,z) = src(, y, (width-1) - x);
     //v(x,y,z) = src((width - 1) - x, y, z);

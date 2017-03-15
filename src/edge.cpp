@@ -13,6 +13,9 @@
 #include <QThread>
 #include <QFileInfo>
 
+// TODO: get rid of vec3 
+#include <QMatrix4x4> 
+
 #include "util.hpp"
 
 using namespace vol;
@@ -56,10 +59,10 @@ namespace edge {
       // Scale volume globally. 
       if(conf.scalef != 1.0f) vs[c] = scaleXYZ(vs[c], conf.scalef, conf.threads);
 
-      if(frame_num == 1 || frame_num == 3) {
+      /*if(frame_num == 1 || frame_num == 3) {
 	  volume8 *src = vs[c];
 	  volume8 *dst = new volume8(src->width, src->height, src->depth);
-	  dst->mirrorx(*src);
+	  dst->mirrorx(*src); // mirror x-axis to align two views
 	  delete src;
 	  vs[c] = dst;
       }
@@ -67,21 +70,10 @@ namespace edge {
 	cout << "rotate90" << endl;
 	volume8 *src = vs[c];
 	volume8 *dst = new volume8(src->width, src->height, src->depth);
-	dst->rotate90minus(*src);
-	//dst->rotate90(*src);
-	delete src;
-	vs[c] = dst;
-      }
-      /*if(frame_num == 2 || frame_num == 3) {
-	cout << "rotate90" << endl; // -180 rotation required for beads
-	volume8 *src = vs[c];
-	volume8 *dst = new volume8(src->width, src->height, src->depth);
-	//dst->rotate90minus(*src);
-	dst->rotate90(*src);
+	dst->rotate90minus(*src);  // -90 rotatation to align 
 	delete src;
 	vs[c] = dst;
 	}*/
-
       
       cout << "channel = " << c << endl;
       cout << "scaled dimensions:" << vs[c]->width << " x " << vs[c]->height << " x " << vs[c]->depth << endl;
@@ -268,6 +260,7 @@ namespace edge {
   }
 
 
+  
   // Use EDT + fractional Hausdorff distance. EDT values sorted with distance at f = 0.
   // Try several positions of previous voxelized shape.
   void image_stack::process_nucs() {
@@ -320,6 +313,48 @@ namespace edge {
     delete bv; 
   }
 
+  void image_stack::process_align(image_stack *stack2) {
+    if(vs.size() == 0 || stack2->vs.size() == 0) return; // no channels?
+
+    volume8 transformed(stack2->vs[0]->width, stack2->vs[0]->height, stack2->vs[0]->depth);
+
+    QMatrix4x4 bestT;
+    double bestcorr = 0;
+    //    for(float dx = -6; dx <= 6; dx += 1) {
+    //      for(float dy = -6; dy <= 6; dy += 1) {
+    //    	for(float dz = -6; dz <= 6; dz += 1) {
+    float dx = -6, dy = -1,  dz = 2;
+    	  cout << dx << "\t" << dy << "\t" << dz << endl;
+	  for(float a = -8; a <= 8; a += 2) {
+	    for(float b = -8; b <= 8; b += 2) {
+	      for(float c = -8; c <= 8; c += 2) {
+		QMatrix4x4 T;
+		T.translate(dx,dy,dz);
+		QQuaternion rot = QQuaternion::fromEulerAngles(a,b,c);
+		T.rotate(rot);
+		transformed.fill(0);
+		transformed.ridged(*stack2->vs[0], T);
+		double corr = vs[0]->correlation(transformed);
+		if(corr > bestcorr) {
+		  cout << corr << endl;
+		  bestcorr = corr;
+		  bestT = T;
+		}
+	      }
+	    }
+	    //	  }
+	  //	}
+  //      }
+    }
+    
+    qWarning() << bestT << endl;
+      // Keep transformed volume.
+    transformed.fill(0);
+    transformed.ridged(*stack2->vs[0], bestT);
+      
+    dispvols.push_back(new volume8(transformed));
+  }
+  
   void image_stack::process_edge() {
     int w = iwidth, h = iheight, d = idepth;
     // Enhance by rank filtering.
@@ -1510,7 +1545,6 @@ namespace edge {
     }
   };
 
-
   // Loads .TIFs as 16-bit images.
   void hyperstack::load_tiff_stacks() {
     // TODO: Need to handle out of range and errors better at load.
@@ -1554,6 +1588,11 @@ namespace edge {
     for(int t = 0; t < conf.hs_threads; t++) delete threads[t];
     threads.clear();
 
+    //if(conf.analysis_id == analysis::SPIMTest) {
+    //stacks[0]->process_align(stacks[1]);
+    //stacks[2]->process_align(stacks[3]);
+    //}
+    
     if(conf.analysis_id == analysis::NucsOnly || 
        conf.analysis_id == analysis::NucsMembranes || 
        conf.analysis_id == analysis::ManualGroundTruth ) {
