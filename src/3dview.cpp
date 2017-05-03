@@ -698,8 +698,13 @@ void _3dView::updateMeasurementTree(edge::image_cell *cell) {
       addItem2Tree("Bend", QString::number(cell->max_cell_bend), "au");
       addItem2Tree("Nuc. Apical Dist.", QString::number(cell->nuc_apical_dist), "um");
       vector<float> &pca_dims = cell->pca_dims;
-      float anisotropy = pca_dims.at(1) / pca_dims.at(0);
-      addItem2Tree("anisotropy", QString::number(anisotropy), "");      
+      if(pca_dims.size() >= 2) {
+	float anisotropy = pca_dims.at(1) / pca_dims.at(0);
+	addItem2Tree("anisotropy", QString::number(anisotropy), "");
+      }
+      else {
+	addItem2Tree("anisotropy", QString::number(0.0), "");
+      }
     }
     else {
       updateItem(0, QString::number(cell->trajectoryid));
@@ -710,8 +715,10 @@ void _3dView::updateMeasurementTree(edge::image_cell *cell) {
       updateItem(5, QString::number(cell->max_cell_bend));
       updateItem(6, QString::number(cell->nuc_apical_dist));
       vector<float> &pca_dims = cell->pca_dims;
-      float anisotropy = pca_dims.at(1) / pca_dims.at(0);
-      updateItem(7, QString::number(anisotropy));      
+      if(pca_dims.size() >= 2) {
+	float anisotropy = pca_dims.at(1) / pca_dims.at(0);
+	updateItem(7, QString::number(anisotropy));
+      }
     }
   }
   else if(cell->analysis_id() == analysis::DorsalFolds) {
