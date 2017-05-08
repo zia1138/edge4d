@@ -701,9 +701,12 @@ void _3dView::updateMeasurementTree(edge::image_cell *cell) {
       if(pca_dims.size() >= 2) {
 	float anisotropy = pca_dims.at(1) / pca_dims.at(0);
 	addItem2Tree("anisotropy", QString::number(anisotropy), "");
+	float anisotropy_DV = pca_dims.at(2) / pca_dims.at(1);
+	addItem2Tree("anisotropy.DV", QString::number(anisotropy_DV), "");	
       }
       else {
 	addItem2Tree("anisotropy", QString::number(0.0), "");
+	addItem2Tree("anisotropy.DV", QString::number(0.0), "");	
       }
     }
     else {
@@ -718,6 +721,8 @@ void _3dView::updateMeasurementTree(edge::image_cell *cell) {
       if(pca_dims.size() >= 2) {
 	float anisotropy = pca_dims.at(1) / pca_dims.at(0);
 	updateItem(7, QString::number(anisotropy));
+	float anisotropy_DV = pca_dims.at(2) / pca_dims.at(1);
+	updateItem(8, QString::number(anisotropy_DV));
       }
     }
   }

@@ -1794,7 +1794,8 @@ namespace edge {
     output << "volume\t"; // 8 
     output << "surface.area\t"; // 9 
     output << "AB.length\t"; // 10
-    output << "anisotropy\t"; // 11
+    output << "anisotropy\t"; // 11A
+    output << "anisotropy.DV\t"; // 11B    
     output << "vol.above.nuc\t"; // 12
     output << "sa.above.nuc\t"; // 13
     output << "apical.x\t"; // 14
@@ -1832,7 +1833,9 @@ namespace edge {
 	vector<float> &pca_dims = cell->pca_dims;
 	output << pca_dims.at(2) << '\t'; // AB.length 9
 	float anisotropy = pca_dims.at(1) / pca_dims.at(0);
-	output << anisotropy << '\t'; 	// anisotropy 11
+	output << anisotropy << '\t'; 	// anisotropy 11A
+	float anisotropy_DV = pca_dims.at(2) / pca_dims.at(1);
+	output << anisotropy_DV << '\t'; // anisotropy 11B
 	output << cell->vol_above_nuc << '\t';	 // vol.above.nuc 12
 	output << cell->sa_above_nuc << '\t'; // sa.above.nuc 13
 	vec3 apical_pos = alpha * cell->apical_pos, basal_pos = alpha * cell->basal_pos;

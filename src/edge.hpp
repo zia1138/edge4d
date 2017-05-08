@@ -83,7 +83,7 @@ namespace edge {
     float max_cell_bend;
     
     dorsalfolds_t dorsalfolds;
-    float rel_angle, aspect_ratio, rel_aspect, anisotropy;
+    float rel_angle, aspect_ratio, rel_aspect, anisotropy, anisotropy_DV;
     float depth_len, nuc_apical_dist;
 
     vector<float> neighbor_bend, neighbor_contact_sa;
@@ -101,6 +101,7 @@ namespace edge {
       model_volume = 0;
       rel_angle = 0;
       anisotropy = 0;
+      anisotropy_DV = 0; 
       aspect_ratio = 1;
       depth_len = 0;
       trajectoryid = -1;
